@@ -2,9 +2,9 @@ import inspect
 
 #CONSTANTS
 
-URL = "https://opensource-demo.orangehrmlive.com/"
-USERNAME = "Admin"
-PASSWORD = "admin123"
+URL = "https://amazon.com/"
+USERNAME = "python.sriracha@gmail.com"
+PASSWORD = "Van!!ock450,."
 
 #FUNCTIONS
 

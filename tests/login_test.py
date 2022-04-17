@@ -1,17 +1,15 @@
 import allure
 
-from pages.loginPage import LoginPage
-from pages.homePage import HomePage
+from pages.signin_page import LoginPage
+from pages.home_page import HomePage
 from utils import utils as environment
 
 
 class TestLogin:
     def test_login(self, driver):
         driver.get(environment.URL)
-        login = LoginPage(driver)
-        login.enter_username(environment.USERNAME)
-        login.enter_password(environment.PASSWORD)
-        login.click_login()
+        home = HomePage(driver)
+        home.click_signin()
         test_name = environment.whoami()
         screenshot_name = test_name + "_screenshot_login"
         # save screenshot in allure
@@ -22,10 +20,8 @@ class TestLogin:
     def test_logout(self, driver):
         try:
             homepage = HomePage(driver)
-            homepage.click_welcome()
             homepage.click_logout()
-            x = driver.title
-            assert x == "OrangeHRM"
+            assert driver.title == "Amazon Sign-In"
         except AssertionError as error:
             print("Assertion error occurred")
             print(error)
@@ -52,7 +48,3 @@ class TestLogin:
             print("No exceptions occurred")
         finally:
             print("Inside finally block")
-
-
-
-

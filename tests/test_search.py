@@ -38,7 +38,8 @@ class TestSearch:
         item = ItemPage(driver)
         print("PRICE: ", item.get_item_price())
 
-    @pytest.mark.parametrize("item", ["iPhone", "macbook pro"])
+    # @pytest.mark.parametrize("item", ["iPhone", "macbook pro"])
+    @pytest.mark.parametrize("item", ["macbook pro"])
     def test_scour_item_II(self, driver, item):
         driver.get(environment.URL)
         home = HomePage(driver)

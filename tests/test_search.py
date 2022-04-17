@@ -21,6 +21,7 @@ class TestSearch:
         screenshot_name = test_name + "_screenshot1_"
         allure.attach(driver.get_screenshot_as_png(), name=screenshot_name,
                       attachment_type=allure.attachment_type.PNG)
+        driver.back()
         sres.click_second_result()
         screenshot_name = test_name + "_screenshot2_"
         allure.attach(driver.get_screenshot_as_png(), name=screenshot_name,

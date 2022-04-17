@@ -46,6 +46,8 @@ class TestSearch:
         sres = SearchResultsPage(driver)
         assert "RESULTS" == sres.verify_results_page()
 
+        # for elem in driver.find_elements(By.XPATH, "//div[@data-component-type='s-search-result']"):
+        #     print("item: ", elem.text)
         sres.click_first_result_type2()
         driver.implicitly_wait(5)
         item = ItemPage(driver)

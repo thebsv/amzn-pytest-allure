@@ -1,5 +1,6 @@
 import allure
 import pytest
+from selenium.webdriver.common.by import By
 
 from pages.searchres_page import SearchResultsPage
 from pages.home_page import HomePage
@@ -26,7 +27,6 @@ class TestSearch:
         allure.attach(driver.get_screenshot_as_png(), name=screenshot_name,
                       attachment_type=allure.attachment_type.PNG)
 
-
     @pytest.mark.parametrize("item", ["nike air dunk low", "adidas duffle bag"])
     def test_scour_item(self, driver, item):
         driver.get(environment.URL)
@@ -37,3 +37,27 @@ class TestSearch:
         sres.click_first_result()
         item = ItemPage(driver)
         print("PRICE: ", item.get_item_price())
+
+    @pytest.mark.parametrize("item", ["iPhone", "macbook pro"])
+    def test_scour_item_II(self, driver, item):
+        driver.get(environment.URL)
+        home = HomePage(driver)
+        home.search_for(item)
+        sres = SearchResultsPage(driver)
+        assert "RESULTS" == sres.verify_results_page()
+
+        sres.click_first_result_type2()
+        driver.implicitly_wait(5)
+        item = ItemPage(driver)
+        print("PRICE: ", item.get_item_price())
+        driver.back()
+
+    def test_today_deals(self, driver):
+        driver.get(environment.URL)
+        home = HomePage(driver)
+        home.search_for("iPhone")
+        sres = SearchResultsPage(driver)
+        assert "RESULTS" == sres.verify_results_page()
+        sres.click_todays_deals()
+        assert "Today's Deals" == sres.verify_todays_deals()
+

@@ -4,12 +4,11 @@ import pytest
 # Get browser name from arguments, use parser as it is
 # this allows to access Python parser to add a new optional parameter
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome", help="Type in browser name e.g. chrome:  ")
+    parser.addoption("--browser", action="store", default="chrome", help="Type in browser name e.g. chrome ")
 
 
 # conftest is used to have the fixtures in one place, so this portion was in login_test.py
-# just added request param, from selenium import webdriver and request.cls.driver = driver
-# this fixture or function will run before, in this case, the class, as that is the scope
+# this fixture or function will run before, in this case, the module, as that is the scope
 @pytest.fixture(scope="module")
 def driver(request):
     from selenium import webdriver
@@ -18,19 +17,17 @@ def driver(request):
 
     browser = request.config.getoption("--browser")
     if browser == "chrome":
+        from selenium.webdriver.chrome.options import Options
+        from selenium.webdriver.chrome.service import Service
+        chrome_options = Options()
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-gpu")
         # only this command is needed to download or look the chromedriver, no need for .exe
-        driver = webdriver.Chrome(ChromeDriverManager().install())
-        # driver = webdriver.Chrome(executable_path= "C:/Users/jorge/Desktop/Work/Code/Mine/PythonAutomationFramework/drivers/chromedriver.exe")
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     elif browser == "firefox":
         driver = webdriver.Firefox(GeckoDriverManager().install())
-    elif browser == "edge":
-        driver = webdriver.Edge(EdgeDriverManager().install())
-    else:
-        driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.implicitly_wait(5)
     driver.maximize_window()
-    # next line will send the driver variable to the class
-    # request.cls.driver = driver
     yield driver
     driver.close()
     driver.quit()

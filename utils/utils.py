@@ -3,6 +3,8 @@ import inspect
 #CONSTANTS
 
 URL = "https://amazon.com/"
+USERNAME = "bhargav.srinivasan93@gmail.com"
+PASSWORD = "Bhar00912**"
 
 #FUNCTIONS
 
